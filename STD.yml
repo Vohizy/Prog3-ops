@@ -1,0 +1,22 @@
+Parameters:
+  SSMParameterName:
+    Type: String
+    Description: The name of the SSM parameter to store the bucket name and ARN
+
+Resources:
+  MyS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: STD21005
+      AccessControl: PublicRead
+      WebsiteCofiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+    DeletionPolicy: retain
+
+  MySSMParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Ref SSMParameterName
+      Type: String
+      Value: !Join [',', [!Ref MyS3Bucket, !GetAtt MyS3Bucket.Arn]]
