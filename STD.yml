@@ -5,7 +5,7 @@ Parameters:
 
 Resources:
   MyS3Bucket:
-    Type: 'AWS::S3::Bucket'
+    Type: AWS::S3::Bucket
     Properties:
       BucketName: STD21005
       AccessControl: PublicRead
@@ -14,9 +14,16 @@ Resources:
         ErrorDocument: error.html
     DeletionPolicy: retain
 
-  MySSMParameter:
-    Type: 'AWS::SSM::Parameter'
+  MyBucketNameParameter:
+    Type: AWS::SSM::Parameter
     Properties:
-      Name: !Ref SSMParameterName
+      Name: /my-stack/my-bucket-name
       Type: String
-      Value: !Join [',', [!Ref MyS3Bucket, !GetAtt MyS3Bucket.Arn]]
+      Value: !Ref MyBucket
+
+  MyBucketArnParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /my-stack/my-bucket-arn
+      Type: String
+      Value: !GetAtt MyBucket.Arn
