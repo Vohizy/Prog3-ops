@@ -1,4 +1,0 @@
-aaws cloudformation create-stack \
-  --stack-name my-stack \
-  --template-body file://F:/project/front-end/ops/STD.yml \
-  --parameters ParameterKey=MyParameter,ParameterValue=my-value
